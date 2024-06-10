@@ -1,0 +1,46 @@
+-- This script drops the table 'smartdev' if it exists
+drop index if exists smartdevi1;
+
+-- This script creates or replaces a table named 'smartdev'
+create or replace table
+    smartdev (
+        -- 'id' is an auto-incrementing integer, starting from 1, used as the primary key
+        id integer not null generated always as identity (
+            start
+            with
+                1 increment by 1
+        ) primary key,
+        -- 'devive_id' is a string of max length 22, default value is an empty string
+        device_id for column devid varchar(22) not null default '',
+        -- 'type' is a string of max length 10, default value is an empty string
+        -- 'type' can be 'LIGHT', 'SWITCH'
+        type varchar(10) not null default '',
+        -- 'state' is a string of max length 3, default value is 'OFF'
+        state varchar(3) not null default 'OFF',
+        -- 'color' is a string of max length 8, default value is 'WHITE'
+        color varchar(8) not null default 'WHITE',
+        -- 'status' is a string of max length 8, default value is 'OK'
+        status varchar(8) not null default 'OK',
+        -- 'last_change' is a timestamp, default value is the current timestamp
+        last_change for column lastchg timestamp not null
+        with
+            default current_timestamp
+    ) rcdfmt smartdevf;;
+
+-- Assigning a label to the table 'smartdev'
+label on table smartdev is 'IBMi Smart Green - Device';
+
+-- Assigning labels to the columns of the table
+label on column smartdev (
+    id is 'Id',
+    state is 'State',
+    color is 'Color',
+    status is 'Status',
+    last_change is 'Last Change'
+);
+
+-- Creating an index 'smartdevi1' on the 'id' column of the 'smartdev' table
+create index smartdevi1 on smartdev (id asc) rcdfmt smartdevf1 add all columns;
+
+-- Assigning a label to the index 'smartdevi1'
+label on index smartdevi1 is 'IBMi Smart Green - Device - Index ID';

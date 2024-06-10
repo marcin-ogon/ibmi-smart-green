@@ -1,0 +1,8 @@
+        PGM PARM(&MSG)
+        
+        DCL &MSG TYPE(*CHAR) LEN(32)
+
+        SNDUSRMSG MSG(&MSG) MSGRPY(&MSG) TOMSGQ(CAMEL) MSGTYPE(*INQ)
+
+END:    ENDPGM
+

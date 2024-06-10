@@ -1,0 +1,31 @@
+**free
+/if Defined (smart)
+/if not Defined (smart_used)
+dcl-ds SmartDevTemplate extname( 'SMARTDEV' ) qualified template
+end-ds;
+
+dcl-s ColorNameTemplate  like(SmartDevTemplate.color) template;
+dcl-s StateNameTemplate  like(SmartDevTemplate.state) template;
+dcl-s DeviceTypeTemplate like(SmartDevTemplate.type) template;
+
+dcl-ds DeviceTypes qualified;
+  LIGHT  like(DeviceTypeTemplate) inz('LIGHT');
+  SWITCH like(DeviceTypeTemplate) inz('SWITCH');
+end-ds;
+
+dcl-ds DeviceColors qualified;
+  RED   like(ColorNameTemplate) inz('RED');
+  GREEN like(ColorNameTemplate) inz('GREEN');
+  BLUE  like(ColorNameTemplate) inz('BLUE');
+  elem  like(ColorNameTemplate) dim(3) samepos(RED);
+  elems uns(3) inz(3);
+end-ds;
+
+dcl-ds DeviceStates qualified;
+  ON    like(StateNameTemplate) inz('ON');
+  OFF   like(StateNameTemplate) inz('OFF');
+end-ds;
+/define smart_used
+/endif
+/undefine smart
+/endif
